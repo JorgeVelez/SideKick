@@ -67,6 +67,7 @@ public class MidiManager : MonoBehaviour
 	}
 
 	void Start () {
+        
 		//mainUI = transform.Find ("Canvas");
 
 		////recibir
@@ -122,11 +123,12 @@ public class MidiManager : MonoBehaviour
 				//btConnect.gameObject.SetActive(false);
 
 				outDevice = OutputDevice.InstalledDevices[outDeviceID];
-				outDevice.Open();
+                Debug.Log("output conectado a." + outDeviceID);
+                outDevice.Open();
 
 			}
 			catch(Exception ex)
-			{Debug.Log ("error: "+ex.Message.ToString());
+			{Debug.LogError ("error: "+ex.Message.ToString());
 			}
 		}
 
@@ -160,8 +162,8 @@ public class MidiManager : MonoBehaviour
 	{
 		lock (this)
 		{
-            Debug.Log(msg.Pitch);
-            Debug.Log(msg.Time);
+            Debug.Log("NoteOff channel " + msg.Channel + " Pitch " + msg.Pitch + " Velocity " + msg.Velocity);
+
             pitchesPressed[msg.Pitch] = true;
 		}
 	}
@@ -170,7 +172,8 @@ public class MidiManager : MonoBehaviour
     {
         lock (this)
         {
-            Debug.Log(msg.Control);
+            Debug.Log("control channel " + msg.Channel + " control " + msg.Control + " Value " + msg.Value);
+
         }
     }
 
@@ -207,8 +210,8 @@ public class MidiManager : MonoBehaviour
 	{
 		lock (this)
 		{
-			Debug.Log(msg.Pitch);
-			pitchesPressed.Remove(msg.Pitch);
+            Debug.Log("NoteOff channel " + msg.Channel + " Pitch " + msg.Pitch + " Velocity " + msg.Velocity);
+            pitchesPressed.Remove(msg.Pitch);
 		}
 	}
 
@@ -243,11 +246,14 @@ public class MidiManager : MonoBehaviour
 			inDevice.Close();
 		}
 
-		if(outDevice != null)
-		{
-			outDevice.SilenceAllNotes ();
-			outDevice.Close();
-		}
+        if (outDevice != null)
+        {
+            if (outDevice.IsOpen)
+            {
+                //outDevice.SilenceAllNotes();
+                outDevice.Close();
+            }
+        }
 
 	}
 

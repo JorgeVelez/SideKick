@@ -259,12 +259,10 @@ public class AppManager : MonoBehaviour
 
     void OnApplicationQuit()
     {
-        if (clock.IsRunning)
-        {
-            clock.Stop();
+
+            clock?.Stop();
             inputDevice?.StopReceiving();
             outputDevice?.SilenceAllNotes();
-        }
 
         outputDevice.Close();
         if (inputDevice != null)
@@ -529,6 +527,8 @@ public class Summarizer
         lock (this)
         {
             pitchesPressed[msg.Pitch] = true;
+            Debug.Log("NoteOn channel " + msg.Channel + " Pitch " + msg.Pitch + " Velocity " + msg.Velocity);
+
             PrintStatus();
         }
     }
@@ -538,6 +538,7 @@ public class Summarizer
         lock (this)
         {
             pitchesPressed.Remove(msg.Pitch);
+            Debug.Log("NoteOff channel " + msg.Channel + " Pitch " + msg.Pitch + " Velocity " + msg.Velocity);
             PrintStatus();
         }
     }
@@ -546,7 +547,8 @@ public class Summarizer
     {
         lock (this)
         {
-            Debug.Log("sysexHandler: ");
+            Debug.Log("sysex " + msg.Time );
+
         }
     }
 
@@ -554,7 +556,7 @@ public class Summarizer
     {
         lock (this)
         {
-            Debug.Log("CCHandler: ");
+            Debug.Log("CCHandler channel "+msg.Channel+" val "+msg.Value);
         }
     }
 

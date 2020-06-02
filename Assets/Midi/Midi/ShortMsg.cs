@@ -291,9 +291,9 @@ namespace Midi
         /// </summary>
         /// <param name="dwParam1">The dwParam1 arg passed to MidiInProc.</param>
         /// <param name="dwParam2">The dwParam2 arg passed to MidiInProc.</param>
-        public static bool IsTimeCode(UIntPtr dwParam1, UIntPtr dwParam2)
+        public static bool IsTimeClock(UIntPtr dwParam1, UIntPtr dwParam2)
         {
-            return ((int)dwParam1 & 0xf0) == 0xf8;
+            return ((int)dwParam1 ) == 0xf8;
         }
 
         /// <summary>
@@ -306,7 +306,7 @@ namespace Midi
         /// </param>
         /// <param name="timestamp">Filled in with the timestamp in microseconds since
         /// midiInStart().</param>
-        public static void DecodeTimeCode(UIntPtr dwParam1, UIntPtr dwParam2,
+        public static void DecodeTimeClock(UIntPtr dwParam1, UIntPtr dwParam2,
                                 out UInt32 timestamp)
         {
             if (!IsPitchBend(dwParam1, dwParam2))
@@ -324,7 +324,7 @@ namespace Midi
         /// <param name="channel">The channel.</param>
         /// <param name="value">The pitch bend value, 0..16383, 8192 is centered.</param>
         /// <returns>A value that can be passed to midiOutShortMsg.</returns>
-        public static UInt32 EncodeTimeCode(Channel channel, int value)
+        public static UInt32 EncodeTimeClock(Channel channel, int value)
         {
             channel.Validate();
             if (value < 0 || value > 16383)

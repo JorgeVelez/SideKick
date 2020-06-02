@@ -481,7 +481,7 @@ namespace Midi
                     int value;
                     Instrument instrument;
                     UInt32 win32Timestamp;
-                    UnityEngine.Debug.Log((int)dwParam1 & 0xf0);
+                    //UnityEngine.Debug.Log((int)dwParam1);
                     if (ShortMsg.IsNoteOn(dwParam1, dwParam2))
                     {
                         if (NoteOn != null)
@@ -532,11 +532,11 @@ namespace Midi
                                 clock == null ? win32Timestamp / 1000f : clock.Time));
                         }
                     }
-                    else if (ShortMsg.IsTimeCode(dwParam1, dwParam2))
+                    else if (ShortMsg.IsTimeClock(dwParam1, dwParam2))
                     {
                         if (timeCode != null)
                         {
-                            ShortMsg.DecodeTimeCode(dwParam1, dwParam2, out win32Timestamp);
+                            ShortMsg.DecodeTimeClock(dwParam1, dwParam2, out win32Timestamp);
                             timeCode(new TimecodeMessage(this, clock == null ? win32Timestamp / 1000f : clock.Time));
                         }
                     }
@@ -720,3 +720,25 @@ namespace Midi
         #endregion
     }
 }
+
+/*Debug.Log(0xF8>>4);
+
+    System Real-Time Message         Status Byte
+------------------------         -----------
+Timing Clock                         F8
+Start Sequence                      FA
+Continue Sequence                    FB
+Stop Sequence                       FC
+Active Sensing                       FE
+System Reset                         FF
+
+
+    Voice Message           Status Byte      Data Byte1          Data Byte2
+-------------           -----------   -----------------   -----------------
+Note off                      8x            Key number          Note Off velocity
+Note on                       9x            Key number          Note on velocity
+Polyphonic Key Pressure         Ax          Key number          Amount of pressure
+Control Change                  Bx          Controller number   Controller value
+Program Change                Cx            Program number      None
+Channel Pressure              Dx            Pressure value      None
+Pitch Bend                    Ex            MSB                 LSB*/
