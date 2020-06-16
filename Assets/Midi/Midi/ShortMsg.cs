@@ -309,9 +309,9 @@ namespace Midi
         public static void DecodeTimeClock(UIntPtr dwParam1, UIntPtr dwParam2,
                                 out UInt32 timestamp)
         {
-            if (!IsPitchBend(dwParam1, dwParam2))
+            if (!IsTimeClock(dwParam1, dwParam2))
             {
-                throw new ArgumentException("Not a pitch bend message.");
+                throw new ArgumentException("Not a time clock message.");
             }
             //channel = (Channel)((int)dwParam1 & 0x0f);
             //value = ((((int)dwParam1 >> 9) & 0x3f80) | (((int)dwParam1 >> 8) & 0x7f));

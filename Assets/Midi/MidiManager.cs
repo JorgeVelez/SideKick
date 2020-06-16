@@ -3,16 +3,15 @@ using UnityEngine.UI;
 using System.Collections;
 using System.Collections.Generic;
 using System;
-using System.IO;
+using System.Linq;
 using System.ComponentModel;
 using Midi;
 using UnityEngine.EventSystems;
 
-public class MidiManager : MonoBehaviour 
+public class MidiManager : Singleton<MidiManager> 
 {
-	private static MidiManager instance;  
 
-	public static OutputDevice outDevice;
+	public OutputDevice outDevice;
 
 	public bool autoConnect=false;
 	public bool showGui=false;
@@ -52,22 +51,21 @@ public class MidiManager : MonoBehaviour
 
 	private Dictionary<Pitch, bool> pitchesPressed;
 
-	private MidiManager() {
+    private List<float> timeClocks = new List<float>();
 
-	}
+    private float lastClock = 0;
 
-	public static MidiManager Instance 	
-	{ 		
-		get 		
-		{ 			
-			if (instance == null)
-				instance = new MidiManager (); 			
-			return instance; 		
-		}  	
-	}
+    private float Bpm = 0;
+    private float Bpm2 = 0;
+    private float Bpm3 = 0;
+
+    public Text bpmTx;
+    public Text bpm2Tx;
+    public Text bpm3Tx;
 
 	void Start () {
-        
+
+        Application.targetFrameRate = 200;
 		//mainUI = transform.Find ("Canvas");
 
 		////recibir
@@ -145,7 +143,7 @@ public class MidiManager : MonoBehaviour
                 inDevice.ControlChange += new InputDevice.ControlChangeHandler(this.controlChangeHandler);
                 inDevice.SysEx += new InputDevice.SysExHandler(this.sysexHandler);
                 inDevice.ProgramChange += new InputDevice.ProgramChangeHandler(this.programChangeHandler);
-                inDevice.timeCode += new InputDevice.TimeCodeHandler(this.timeCodeHandler);
+                inDevice.timeClock += new InputDevice.TimeClockHandler(this.timeCodeHandler);
                 inDevice.Open();
                 inDevice.StartReceiving(null, true);
 
@@ -162,7 +160,7 @@ public class MidiManager : MonoBehaviour
 	{
 		lock (this)
 		{
-            Debug.Log("NoteOff channel " + msg.Channel + " Pitch " + msg.Pitch + " Velocity " + msg.Velocity);
+            Debug.Log("NoteOn channel " + msg.Channel + " Pitch " + msg.Pitch + " Velocity " + msg.Velocity);
 
             pitchesPressed[msg.Pitch] = true;
 		}
@@ -185,19 +183,33 @@ public class MidiManager : MonoBehaviour
         }
     }
 
-    public void timeCodeHandler(TimecodeMessage msg)
+    public void timeCodeHandler(TimeclockMessage msg)
     {
         lock (this)
         {
-            Debug.Log(msg.Time);
+            float delta = msg.Time - lastClock;
+            timeClocks.Add(delta);
+            Debug.Log(msg.Time - lastClock);
+            lastClock = msg.Time;
+            
+            if (timeClocks.Count>48)
+                timeClocks.RemoveAt(0);
+
+                Bpm =Mathf.Round( 60f / ((timeClocks.Average()) * 24f));
+            
         }
     }
 
-    
+
+    void Update()
+    {
+        bpmTx.text = Bpm.ToString();
+        bpm2Tx.text = Bpm2.ToString();
+        bpm3Tx.text = Bpm3.ToString();
+    }
 
 
-
-    public void sysexHandler(SysExMessage msg)
+        public void sysexHandler(SysExMessage msg)
 	{
 		lock (this)
 		{

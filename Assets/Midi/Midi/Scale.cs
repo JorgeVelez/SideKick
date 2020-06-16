@@ -274,13 +274,43 @@ namespace Midi
         /// Pattern for Major scales.
         /// </summary>
         public static ScalePattern Major =
-            new ScalePattern("Major", new int[] { 0, 2, 4, 5, 7, 9, 11 });
+            new ScalePattern("Major/Ioninan", new int[] { 0, 2, 4, 5, 7, 9, 11 });
 
         /// <summary>
         /// Pattern for Natural Minor scales.
         /// </summary>
-        public static ScalePattern NaturalMinor =
-            new ScalePattern("Natural Minor", new int[] { 0, 2, 3, 5, 7, 8, 10 });
+        public static ScalePattern Minor =
+            new ScalePattern("Minor/Aeolian", new int[] { 0, 2, 3, 5, 7, 8, 10 });
+
+        /// <summary>
+        /// Pattern for Natural Minor scales.
+        /// </summary>
+        public static ScalePattern Dorian =
+            new ScalePattern("Dorian", new int[] { 0, 2, 3, 5, 7, 9, 10 });
+
+        /// <summary>
+        /// Pattern for Natural Minor scales.
+        /// </summary>
+        public static ScalePattern Phrygian =
+            new ScalePattern("Phrygian", new int[] { 0, 1, 3, 5, 7, 8, 10 });
+
+        /// <summary>
+        /// Pattern for Natural Minor scales.
+        /// </summary>
+        public static ScalePattern Lydian =
+            new ScalePattern("Lydian", new int[] { 0, 2, 4, 6, 7, 9, 11 });
+
+        /// <summary>
+        /// Pattern for Natural Minor scales.
+        /// </summary>
+        public static ScalePattern MixoLydian =
+            new ScalePattern("MixoLydian", new int[] { 0, 2, 4, 5, 7, 9, 10 });
+
+        /// <summary>
+        /// Pattern for Natural Minor scales.
+        /// </summary>
+        public static ScalePattern Locrian =
+            new ScalePattern("Locrian", new int[] { 0, 1, 3, 5, 6, 8, 10 });
 
         /// <summary>
         /// Pattern for Harmonic Minor scales.
@@ -315,7 +345,12 @@ namespace Midi
         public static ScalePattern[] Patterns = new ScalePattern[]
         {
             Major,
-            NaturalMinor,
+            Minor,
+            Dorian,
+            Phrygian,
+            Lydian,
+            MixoLydian,
+            Locrian,
             HarmonicMinor,
             MelodicMinorAscending,
             MelodicMinorDescending,

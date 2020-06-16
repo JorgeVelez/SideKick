@@ -429,7 +429,7 @@ namespace Midi
      /// <summary>
      /// Control change message.
      /// </summary>
-    public class TimecodeMessage : ChannelMessage
+    public class TimeclockMessage : ChannelMessage
     {
         /// <summary>
         /// Construts a Control Change message.
@@ -439,7 +439,7 @@ namespace Midi
         /// <param name="control">Control, 0..119</param>
         /// <param name="value">Value, 0..127.</param>
         /// <param name="time">The timestamp for this message.</param>
-        public TimecodeMessage(DeviceBase device,
+        public TimeclockMessage(DeviceBase device,
             float time)
             : base(device, 0, time)
         {
@@ -459,7 +459,7 @@ namespace Midi
         /// </summary>
         public override Message MakeTimeShiftedCopy(float delta)
         {
-            return new TimecodeMessage(Device, Time + delta);
+            return new TimeclockMessage(Device, Time + delta);
         }
     }
 

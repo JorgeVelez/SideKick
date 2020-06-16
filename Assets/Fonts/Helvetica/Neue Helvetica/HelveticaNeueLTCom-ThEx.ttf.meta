@@ -1,0 +1,33 @@
+fileFormatVersion: 2
+guid: 2ae72ebcdf3fa0e4b9656184bc95fe4d
+TrueTypeFontImporter:
+  externalObjects: {}
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: Helvetica Neue LT Com
+  fontNames:
+  - Helvetica Neue LT Com
+  fallbackFontReferences:
+  - {fileID: 12800000, guid: 1b1eba93917055048bf32f0b52ca106f, type: 3}
+  - {fileID: 12800000, guid: 0e5f61b7e54ef3743863b7ecbfa21cba, type: 3}
+  - {fileID: 12800000, guid: 062794e8dc7e2734f9cac2f647636932, type: 3}
+  - {fileID: 12800000, guid: 0f6384f83713a4c408c242513222dc74, type: 3}
+  - {fileID: 12800000, guid: 0550483a05466df459838b264c381fe5, type: 3}
+  - {fileID: 12800000, guid: 2349cf4a555a60d47a537019f459f9eb, type: 3}
+  - {fileID: 12800000, guid: 1162833bb815e804ca0a47cb8a3de7ba, type: 3}
+  - {fileID: 12800000, guid: 2876ec0cb21a33d4a9820f502396db56, type: 3}
+  - {fileID: 12800000, guid: 21b4e95da399d3142b4106cd01ba98c2, type: 3}
+  - {fileID: 12800000, guid: 10e51d2e0bf175e4e82b6ef20b809262, type: 3}
+  - {fileID: 12800000, guid: 194a9e9ff58943f4ca636a36d2accb94, type: 3}
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  useLegacyBoundsCalculation: 0
+  shouldRoundAdvanceValue: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

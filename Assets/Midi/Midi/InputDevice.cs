@@ -83,7 +83,7 @@ namespace Midi
         /// </summary>
         public delegate void PitchBendHandler(PitchBendMessage msg);
 
-        public delegate void TimeCodeHandler(TimecodeMessage msg);
+        public delegate void TimeClockHandler(TimeclockMessage msg);
 
         #region SysEx
         /// <summary>
@@ -121,7 +121,7 @@ namespace Midi
         /// </summary>
         public event PitchBendHandler PitchBend;
 
-        public event TimeCodeHandler timeCode;
+        public event TimeClockHandler timeClock;
 
         #region SysEx
         /// <summary>
@@ -140,7 +140,7 @@ namespace Midi
             ControlChange = null;
             ProgramChange = null;
             PitchBend = null;
-            timeCode = null;
+            timeClock = null;
             #region SysEx
             SysEx = null;
 #endregion
@@ -534,10 +534,10 @@ namespace Midi
                     }
                     else if (ShortMsg.IsTimeClock(dwParam1, dwParam2))
                     {
-                        if (timeCode != null)
+                        if (timeClock != null)
                         {
                             ShortMsg.DecodeTimeClock(dwParam1, dwParam2, out win32Timestamp);
-                            timeCode(new TimecodeMessage(this, clock == null ? win32Timestamp / 1000f : clock.Time));
+                            timeClock(new TimeclockMessage(this, clock == null ? win32Timestamp / 1000f : clock.Time));
                         }
                     }
                     else

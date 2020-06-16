@@ -1,0 +1,24 @@
+fileFormatVersion: 2
+guid: 0e5f61b7e54ef3743863b7ecbfa21cba
+TrueTypeFontImporter:
+  externalObjects: {}
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: Helvetica Neue LT Com
+  fontNames:
+  - Helvetica Neue LT Com
+  fallbackFontReferences:
+  - {fileID: 12800000, guid: 062794e8dc7e2734f9cac2f647636932, type: 3}
+  - {fileID: 12800000, guid: 0550483a05466df459838b264c381fe5, type: 3}
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  useLegacyBoundsCalculation: 0
+  shouldRoundAdvanceValue: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

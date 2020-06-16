@@ -1,0 +1,24 @@
+fileFormatVersion: 2
+guid: 3ef726ed3c81eaf49a4bd63e5ef99976
+TrueTypeFontImporter:
+  externalObjects: {}
+  serializedVersion: 4
+  fontSize: 16
+  forceTextureCase: -2
+  characterSpacing: 0
+  characterPadding: 1
+  includeFontData: 1
+  fontName: Helvetica Rounded LT Std
+  fontNames:
+  - Helvetica Rounded LT Std
+  fallbackFontReferences:
+  - {fileID: 12800000, guid: 2110cda65657e634fbba37cd9ce43ae4, type: 3}
+  - {fileID: 12800000, guid: 1c6bd8e7094a128429135642f29ae7e1, type: 3}
+  customCharacters: 
+  fontRenderingMode: 0
+  ascentCalculationMode: 1
+  useLegacyBoundsCalculation: 0
+  shouldRoundAdvanceValue: 1
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
