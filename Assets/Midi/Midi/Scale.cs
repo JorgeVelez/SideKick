@@ -53,6 +53,8 @@ namespace Midi
         /// </remarks>
         public int[] Ascent { get { return ascent; } }
 
+        public ChordPattern[] ChordPatternSequence { get { return chordPatternSequence; } }
+
         #endregion
 
         #region Constructors
@@ -65,7 +67,7 @@ namespace Midi
         /// property for a detailed description and requirements.  This parameter is copied.</param>
         /// <exception cref="ArgumentNullException">name or ascent is null.</exception>
         /// <exception cref="ArgumentException">ascent is invalid.</exception>
-        public ScalePattern(string name, int[] ascent)
+        public ScalePattern(string name, int[] ascent, ChordPattern[] chordPatternSequence)
         {
             if (name == null || ascent == null)
             {
@@ -78,7 +80,9 @@ namespace Midi
             }
             this.name = string.Copy(name);
             this.ascent = new int[ascent.Length];
+            this.chordPatternSequence = new ChordPattern[chordPatternSequence.Length];
             Array.Copy(ascent, this.ascent, ascent.Length);
+            Array.Copy(chordPatternSequence, this.chordPatternSequence, chordPatternSequence.Length);
         }
 
         #endregion
@@ -169,6 +173,7 @@ namespace Midi
 
         private string name;
         private int[] ascent;
+        private ChordPattern[] chordPatternSequence;
 
         #endregion
     }
@@ -274,70 +279,78 @@ namespace Midi
         /// Pattern for Major scales.
         /// </summary>
         public static ScalePattern Major =
-            new ScalePattern("Major/Ioninan", new int[] { 0, 2, 4, 5, 7, 9, 11 });
+            new ScalePattern("Major/Ioninan", new int[] { 0, 2, 4, 5, 7, 9, 11 }, 
+                new ChordPattern[] { Chord.Major, Chord.Minor, Chord.Minor, Chord.Major, Chord.Major, Chord.Minor, Chord.Diminished });
 
         /// <summary>
         /// Pattern for Natural Minor scales.
         /// </summary>
         public static ScalePattern Minor =
-            new ScalePattern("Minor/Aeolian", new int[] { 0, 2, 3, 5, 7, 8, 10 });
+            new ScalePattern("Minor/Aeolian", new int[] { 0, 2, 3, 5, 7, 8, 10 },
+                new ChordPattern[] { Chord.Minor, Chord.Diminished, Chord.Major, Chord.Minor, Chord.Minor, Chord.Major, Chord.Major });
 
         /// <summary>
         /// Pattern for Natural Minor scales.
         /// </summary>
         public static ScalePattern Dorian =
-            new ScalePattern("Dorian", new int[] { 0, 2, 3, 5, 7, 9, 10 });
+            new ScalePattern("Dorian", new int[] { 0, 2, 3, 5, 7, 9, 10 },
+                new ChordPattern[] { Chord.Minor, Chord.Minor, Chord.Major, Chord.Major, Chord.Minor, Chord.Diminished, Chord.Major });
 
         /// <summary>
         /// Pattern for Natural Minor scales.
         /// </summary>
         public static ScalePattern Phrygian =
-            new ScalePattern("Phrygian", new int[] { 0, 1, 3, 5, 7, 8, 10 });
+            new ScalePattern("Phrygian", new int[] { 0, 1, 3, 5, 7, 8, 10 },
+                new ChordPattern[] { Chord.Minor, Chord.Major, Chord.Major, Chord.Minor, Chord.Diminished, Chord.Major, Chord.Minor });
 
         /// <summary>
         /// Pattern for Natural Minor scales.
         /// </summary>
         public static ScalePattern Lydian =
-            new ScalePattern("Lydian", new int[] { 0, 2, 4, 6, 7, 9, 11 });
+            new ScalePattern("Lydian", new int[] { 0, 2, 4, 6, 7, 9, 11 },
+                new ChordPattern[] { Chord.Major, Chord.Major, Chord.Minor, Chord.Diminished, Chord.Major, Chord.Minor, Chord.Minor });
 
         /// <summary>
         /// Pattern for Natural Minor scales.
         /// </summary>
         public static ScalePattern MixoLydian =
-            new ScalePattern("MixoLydian", new int[] { 0, 2, 4, 5, 7, 9, 10 });
+            new ScalePattern("MixoLydian", new int[] { 0, 2, 4, 5, 7, 9, 10 },
+                new ChordPattern[] { Chord.Major, Chord.Minor, Chord.Diminished, Chord.Major, Chord.Minor, Chord.Minor, Chord.Major});
 
         /// <summary>
         /// Pattern for Natural Minor scales.
         /// </summary>
         public static ScalePattern Locrian =
-            new ScalePattern("Locrian", new int[] { 0, 1, 3, 5, 6, 8, 10 });
+            new ScalePattern("Locrian", new int[] { 0, 1, 3, 5, 6, 8, 10 },
+                new ChordPattern[] { Chord.Diminished, Chord.Major, Chord.Minor, Chord.Minor, Chord.Major, Chord.Major, Chord.Minor });
 
         /// <summary>
         /// Pattern for Harmonic Minor scales.
         /// </summary>
         public static ScalePattern HarmonicMinor =
-            new ScalePattern("Harmonic Minor", new int[] { 0, 2, 3, 5, 7, 8, 11 });
+            new ScalePattern("Harmonic Minor", new int[] { 0, 2, 3, 5, 7, 8, 11 },
+                new ChordPattern[] { Chord.Minor, Chord.Diminished, Chord.Major, Chord.Minor, Chord.Minor, Chord.Major, Chord.Major });
 
         /// <summary>
         /// Pattern for Melodic Minor scale as it ascends.
         /// </summary>
         public static ScalePattern MelodicMinorAscending =
-            new ScalePattern("Melodic Minor (ascending)",
-                  new int[] { 0, 2, 3, 5, 7, 9, 11 });
+            new ScalePattern("Melodic Minor (ascending)", new int[] { 0, 2, 3, 5, 7, 9, 11 },
+                new ChordPattern[] { Chord.Minor, Chord.Diminished, Chord.Major, Chord.Minor, Chord.Minor, Chord.Major, Chord.Major });
 
         /// <summary>
         /// Pattern for Melodic Minor scale as it descends.
         /// </summary>
         public static ScalePattern MelodicMinorDescending =
-            new ScalePattern("Melodic Minor (descending)",
-                  new int[] { 0, 2, 3, 5, 7, 8, 10 });
+            new ScalePattern("Melodic Minor (descending)", new int[] { 0, 2, 3, 5, 7, 8, 10 },
+                new ChordPattern[] { Chord.Minor, Chord.Diminished, Chord.Major, Chord.Minor, Chord.Minor, Chord.Major, Chord.Major });
 
         /// <summary>
         /// Pattern for Chromatic scales.
         /// </summary>
         public static ScalePattern Chromatic =
-            new ScalePattern("Chromatic",
-                  new int[] { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11 });
+            new ScalePattern("Chromatic", new int[] { 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11 },
+                new ChordPattern[] { Chord.Minor, Chord.Diminished, Chord.Major, Chord.Minor, Chord.Minor, Chord.Major, Chord.Major });
 
         /// <summary>
         /// Array of all the built-in scale patterns.

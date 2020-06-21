@@ -461,6 +461,22 @@ namespace Midi
         /// </summary>
         /// <param name="pitch">The pitch to test.</param>
         /// <returns>True if this chord contains the pitch.</returns>
+        public Pitch[] GetPitches(Pitch pitch)
+        {
+            Pitch[] pitches = new Pitch[pattern.Ascent.Length];
+
+            for (int i = 0; i < pattern.Ascent.Length; ++i)
+            {
+                pitches[i] = pitch + pattern.Ascent[i];
+            }
+                return pitches;
+        }
+
+        /// <summary>
+        /// Returns true if this chord contains the specified pitch.
+        /// </summary>
+        /// <param name="pitch">The pitch to test.</param>
+        /// <returns>True if this chord contains the pitch.</returns>
         public bool Contains(Pitch pitch)
         {
             return positionInOctaveToContains[pitch.PositionInOctave()];
