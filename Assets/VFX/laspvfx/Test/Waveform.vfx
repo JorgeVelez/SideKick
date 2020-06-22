@@ -324,14 +324,14 @@ VisualEffectResource:
       VFX_USE_PARTICLEINDEXINSTRIP_CURRENT 1\n#define VFX_USE_PARTICLEID_CURRENT
       1\n#define VFX_USE_AGE_CURRENT 1\n#define VFX_USE_ALIVE_CURRENT 1\n#define
       STRIP_COUNT 1u\n#define PARTICLE_PER_STRIP_COUNT 65536u\n#define HAS_STRIPS
-      1\n#define VFX_LOCAL_SPACE 1\n#include \"Packages/com.unity.render-pipelines.high-definition/Runtime/VFXGraph/Shaders/VFXDefines.hlsl\"\n\n\r\nCBUFFER_START(parameters)\n   
-      float4 uniform_h;\n    float3 uniform_k;\n    float uniform_a;\n    float uniform_b;\n   
-      float uniform_c;\n    float uniform_d;\n    float uniform_f;\n    float uniform_g;\n   
+      1\n#define VFX_LOCAL_SPACE 1\n#include \"Packages/com.unity.visualeffectgraph/Shaders/RenderPipeline/Universal/VFXDefines.hlsl\"\n\n\r\nCBUFFER_START(parameters)\n   
+      float4 uniform_h;\n    float3 uniform_k;\n    float uniform_b;\n    float uniform_c;\n   
+      float uniform_d;\n    float uniform_e;\n    float uniform_f;\n    float uniform_g;\n   
       float uniform_i;\n    float uniform_j;\n    uint PADDING_0;\nCBUFFER_END\n\nstruct
       Attributes\n{\n    float3 position;\n    float3 color;\n    float lifetime;\n   
       float3 velocity;\n    uint particleIndexInStrip;\n    uint particleId;\n   
       float age;\n    bool alive;\n};\n\nstruct SourceAttributes\n{\n};\n\nTexture2D
-      texture_e;\nSamplerState samplertexture_e;\nfloat4 texture_e_TexelSize;\n\n\n\r\n\r\n#define
+      texture_b;\nSamplerState samplertexture_b;\nfloat4 texture_b_TexelSize;\n\n\r\n\r\n#define
       USE_DEAD_LIST (VFX_USE_ALIVE_CURRENT && !HAS_STRIPS)\r\n\r\nRWByteAddressBuffer
       attributeBuffer;\r\nByteAddressBuffer sourceAttributeBuffer;\r\n\r\nCBUFFER_START(initParams)\r\n#if
       !VFX_USE_SPAWNER_FROM_GPU\r\n    uint nbSpawned;\t\t\t\t\t// Numbers of particle
@@ -394,29 +394,29 @@ VisualEffectResource:
       PARTICLE_PER_STRIP_COUNT);\r\n\t\tInitStripAttributes(particleIndex, attributes,
       stripData);\r\n\t\t// TODO Change seed to be sure we're deterministic on random
       with strip\r\n#endif\r\n        \r\n        {\n            uint tmp_u = attributes.particleIndexInStrip
-      / asuint(uniform_a);\n            uint tmp_v = tmp_u * asuint(uniform_a);\n           
+      / asuint(uniform_b);\n            uint tmp_v = tmp_u * asuint(uniform_b);\n           
       uint tmp_w = attributes.particleIndexInStrip - tmp_v;\n            float tmp_x
-      = (float)tmp_w;\n            float tmp_y = tmp_x / uniform_b;\n           
+      = (float)tmp_w;\n            float tmp_y = tmp_x / uniform_c;\n           
       float tmp_ba = tmp_y * (float)6.28318548;\n            float tmp_bb = cos(tmp_ba);\n           
       float3 tmp_bc = float3(tmp_bb, tmp_bb, tmp_bb);\n            float3 tmp_be
       = tmp_bc * float3(0, 0, 1);\n            float tmp_bf = sin(tmp_ba);\n           
       float3 tmp_bg = float3(tmp_bf, tmp_bf, tmp_bf);\n            float3 tmp_bi
       = tmp_bg * float3(1, 0, 0);\n            float3 tmp_bj = tmp_be + tmp_bi;\n           
       float tmp_bl = (float)attributes.particleIndexInStrip;\n            float tmp_bm
-      = tmp_bl / uniform_b;\n            float tmp_bn = frac(tmp_bm);\n           
-      float tmp_bo = tmp_bn * uniform_c;\n            float tmp_bp = tmp_bo * uniform_d;\n           
+      = tmp_bl / uniform_c;\n            float tmp_bn = frac(tmp_bm);\n           
+      float tmp_bo = tmp_bn * uniform_d;\n            float tmp_bp = tmp_bo * uniform_e;\n           
       float tmp_bq = (float)1 - tmp_bp;\n            float3 tmp_br = float3(tmp_bq,
       tmp_bq, tmp_bq);\n            float3 tmp_bs = tmp_bj * tmp_br;\n           
       float tmp_bt = tmp_bs[0];\n            float tmp_bu = tmp_bn * uniform_f;\n           
       float tmp_bv = tmp_bu / uniform_g;\n            float2 tmp_bx = float2(tmp_bv,
-      (float)0.5);\n            float4 tmp_bz = SampleTexture(VFX_SAMPLER(texture_e),tmp_bx,(float)0);\n           
+      (float)0.5);\n            float4 tmp_bz = SampleTexture(VFX_SAMPLER(texture_b),tmp_bx,(float)0);\n           
       float4 tmp_ca = tmp_bz * uniform_h;\n            float4 tmp_cc = tmp_ca * float4(1.75,
       1.75, 1.75, 1.75);\n            float tmp_cd = tmp_cc[0];\n            float
       tmp_ce = abs(tmp_cd);\n            float tmp_cf = tmp_bs[2];\n            float3
       tmp_cg = float3(tmp_bt, tmp_ce, tmp_cf);\n            SetAttribute_CAC29747(
       /*inout */attributes.position, tmp_cg);\n        }\n        {\n           
       uint tmp_u = attributes.particleId ^ asuint(uniform_j);\n            float
-      tmp_v = FixedRand(tmp_u);\n            float tmp_w = uniform_d * tmp_v;\n           
+      tmp_v = FixedRand(tmp_u);\n            float tmp_w = uniform_e * tmp_v;\n           
       float tmp_x = uniform_i + tmp_w;\n            float tmp_z = tmp_x * (float)0.300000012;\n           
       float tmp_ba = frac(tmp_z);\n            float tmp_bb = abs(tmp_ba);\n           
       float3 tmp_bd = float3(tmp_bb, (float)1, (float)1);\n            float3 tmp_be
@@ -451,7 +451,7 @@ VisualEffectResource:
       VFX_PASSDEPTH_SELECTION (2)\n#define VFX_USE_POSITION_CURRENT 1\n#define VFX_USE_LIFETIME_CURRENT
       1\n#define VFX_USE_VELOCITY_CURRENT 1\n#define VFX_USE_AGE_CURRENT 1\n#define
       VFX_USE_ALIVE_CURRENT 1\n#define STRIP_COUNT 1u\n#define PARTICLE_PER_STRIP_COUNT
-      65536u\n#define HAS_STRIPS 1\n#define VFX_LOCAL_SPACE 1\n#include \"Packages/com.unity.render-pipelines.high-definition/Runtime/VFXGraph/Shaders/VFXDefines.hlsl\"\n\n\r\nCBUFFER_START(parameters)\n   
+      65536u\n#define HAS_STRIPS 1\n#define VFX_LOCAL_SPACE 1\n#include \"Packages/com.unity.visualeffectgraph/Shaders/RenderPipeline/Universal/VFXDefines.hlsl\"\n\n\r\nCBUFFER_START(parameters)\n   
       float deltaTime_a;\n    uint3 PADDING_0;\nCBUFFER_END\n\nstruct Attributes\n{\n   
       float3 position;\n    float lifetime;\n    float3 velocity;\n    float age;\n   
       bool alive;\n};\n\nstruct SourceAttributes\n{\n};\n\n\n\r\n\r\n#define USE_DEAD_LIST
@@ -518,18 +518,18 @@ VisualEffectResource:
   - compute: 0
     name: '[System 1]Output ParticleStrip Line'
     source: "Shader \"Hidden/VFX/Waveform/System 1/Output ParticleStrip Line\"\n{\r\n\tSubShader\r\n\t{\t\r\n\t\tTags
-      { \"Queue\"=\"Transparent+0\" \"IgnoreProjector\"=\"True\" \"RenderType\"=\"Transparent\"
+      { \"Queue\"=\"Transparent\" \"IgnoreProjector\"=\"True\" \"RenderType\"=\"Transparent\"
       }\n\t\t\n\t\t\n\t\t\n\t\t\n\t\t\n\t\t\n\t\t\n\t\t\n\t\t\n\t\t\n\t\t\n\t\t\n\t\t\n\t\t\n\t\t\n\t\t\n\t\t\n\t\t\n\t\tBlend
-      SrcAlpha One \n\t\tZTest LEqual\n\t\tZWrite Off\n\t\tCull Off\n\t\t\n\t\n\t\t\t\n\t\tHLSLINCLUDE\n\t\t\n\t\t#define
+      SrcAlpha One\n\t\tZTest LEqual\n\t\tZWrite Off\n\t\tCull Off\n\t\t\n\t\n\t\t\t\n\t\tHLSLINCLUDE\n\t\t\n\t\t#define
       NB_THREADS_PER_GROUP 64\n\t\t#define HAS_ATTRIBUTES 1\n\t\t#define VFX_PASSDEPTH_ACTUAL
       (0)\n\t\t#define VFX_PASSDEPTH_MOTION_VECTOR (1)\n\t\t#define VFX_PASSDEPTH_SELECTION
       (2)\n\t\t#define VFX_USE_POSITION_CURRENT 1\n\t\t#define VFX_USE_COLOR_CURRENT
       1\n\t\t#define VFX_USE_LIFETIME_CURRENT 1\n\t\t#define VFX_USE_ALPHA_CURRENT
       1\n\t\t#define VFX_USE_AGE_CURRENT 1\n\t\t#define STRIP_COUNT 1u\n\t\t#define
       PARTICLE_PER_STRIP_COUNT 65536u\n\t\t#define VFX_COLORMAPPING_DEFAULT 1\n\t\t#define
-      IS_TRANSPARENT_PARTICLE 1\n\t\t#define VFX_BLENDMODE_ADD 1\n\t\t#define VFX_BYPASS_EXPOSURE
-      1\n\t\t#define HAS_STRIPS 1\n\t\t\n\t\t\n\t\t\n\t\t\n\t\t\n\t\t\n\t\t\n\t\t\n\t\t\n\t\t\n\t\t\n\t\t\n\t\t\n\t\t#define
-      VFX_LOCAL_SPACE 1\n\t\t#include \"Packages/com.unity.render-pipelines.high-definition/Runtime/VFXGraph/Shaders/VFXDefines.hlsl\"\n\t\t\n\n\t\tCBUFFER_START(parameters)\n\t\t   
+      IS_TRANSPARENT_PARTICLE 1\n\t\t#define VFX_BLENDMODE_ADD 1\n\t\t#define HAS_STRIPS
+      1\n\t\t\n\t\t\n\t\t\n\t\t\n\t\t\n\t\t\n\t\t#define VFX_LOCAL_SPACE 1\n\t\t#include
+      \"Packages/com.unity.visualeffectgraph/Shaders/RenderPipeline/Universal/VFXDefines.hlsl\"\n\t\t\n\n\t\tCBUFFER_START(parameters)\n\t\t   
       float4 Alpha_b;\n\t\t    float Color_a;\n\t\t    uint3 PADDING_0;\n\t\tCBUFFER_END\n\t\t\n\t\tstruct
       Attributes\n\t\t{\n\t\t    float3 position;\n\t\t    float3 color;\n\t\t   
       float lifetime;\n\t\t    float alpha;\n\t\t    float age;\n\t\t};\n\t\t\n\t\tstruct
@@ -555,7 +555,7 @@ VisualEffectResource:
       VFX_VARYING_ALPHA builtInInterpolants.y\n\t\t\t#define VFX_VARYING_ALPHATHRESHOLD
       builtInInterpolants.x\n\t\t\t\t\t\t\n\t\t\t#if !(defined(VFX_VARYING_PS_INPUTS)
       && defined(VFX_VARYING_POSCS))\n\t\t\t#error VFX_VARYING_PS_INPUTS and VFX_VARYING_POSCS
-      must be defined.\n\t\t\t#endif\n\t\t\t\n\t\t\t#include \"Packages/com.unity.render-pipelines.high-definition/Runtime/VFXGraph/Shaders/VFXCommon.hlsl\"\n\t\t\t#include
+      must be defined.\n\t\t\t#endif\n\t\t\t\n\t\t\t#include \"Packages/com.unity.visualeffectgraph/Shaders/RenderPipeline/Universal/VFXCommon.hlsl\"\n\t\t\t#include
       \"Packages/com.unity.visualeffectgraph/Shaders/VFXCommon.hlsl\"\n\t\t\t\n\n\t\t\tvoid
       AttributeFromCurve_2C8A40AE(inout float3 color, float age, float lifetime,
       float Color) /*attribute:color Composition:Add AlphaComposition:Overwrite SampleMode:OverLife
@@ -625,11 +625,10 @@ VisualEffectResource:
       alpha = VFXGetFragmentColor(i);\n\t\t\t\tVFXClipFragmentColor(alpha,i);\n\t\t\t#if
       VFX_PASSDEPTH == VFX_PASSDEPTH_SELECTION\n\t\t\t\treturn float4(_ObjectId,
       _PassValue, 1.0, 1.0);\n\t\t\t#elif VFX_PASSDEPTH == VFX_PASSDEPTH_ACTUAL\n\t\t\t\treturn
-      (float4)0;\n\t\t\t#else\n\t\t\t#error VFX_PASSDEPTH undefined \n\t\t\t#endif\n\t\t\t\t\n\t\t\t}\n\t\t\n\t\t\tENDHLSL\n\t\t}\n\t\t\n\r\n\t\t\r\n\t\t//
-      Forward pass\n\t\tPass\n\t\t{\t\t\n\t\t\tTags { \"LightMode\"=\"ForwardOnly\"
-      }\n\t\t\n\t\t\tHLSLPROGRAM\n\t\t\t#pragma target 4.5\n\t\t\t#pragma multi_compile
-      _ DEBUG_DISPLAY\n\t\t\t\n\t\t\tstruct ps_input\n\t\t\t{\n\t\t\t\tfloat4 pos
-      : SV_POSITION;\n\t\t\t\t#if VFX_NEEDS_COLOR_INTERPOLATOR\n\t\t\t\tVFX_OPTIONAL_INTERPOLATION
+      (float4)0;\n\t\t\t#else\n\t\t\t#error VFX_PASSDEPTH undefined \n\t\t\t#endif\n\t\t\t\t\n\t\t\t}\n\t\t\n\t\t\tENDHLSL\n\t\t}\n\t\t\n\r\n\t\t//
+      Forward pass\n\t\tPass\n\t\t{\t\t\n\t\t\tTags { \"LightMode\"=\"UniversalForward\"
+      }\n\t\t\n\t\t\tHLSLPROGRAM\n\t\t\t#pragma target 4.5\n\t\t\t#pragma multi_compile_fog\n\t\t\t\n\t\t\tstruct
+      ps_input\n\t\t\t{\n\t\t\t\tfloat4 pos : SV_POSITION;\n\t\t\t\t#if VFX_NEEDS_COLOR_INTERPOLATOR\n\t\t\t\tVFX_OPTIONAL_INTERPOLATION
       float4 color : COLOR0;\n\t\t\t\t#endif\n\t\t\t\t#if USE_SOFT_PARTICLE || USE_ALPHA_TEST
       || USE_EXPOSURE_WEIGHT\n\t\t\t\tVFX_OPTIONAL_INTERPOLATION float3 builtInInterpolants
       : TEXCOORD0;\n\t\t\t\t#endif\n\t\t\t\t#if VFX_NEEDS_POSWS_INTERPOLATOR\n\t\t\t\tfloat3
@@ -640,10 +639,10 @@ VisualEffectResource:
       VFX_VARYING_INVSOFTPARTICLEFADEDISTANCE builtInInterpolants.x\n\t\t#define
       VFX_VARYING_ALPHATHRESHOLD builtInInterpolants.y\n\t\t#if VFX_NEEDS_POSWS_INTERPOLATOR\n\t\t#define
       VFX_VARYING_POSWS posWS\n\t\t#endif\n\t\t#if USE_EXPOSURE_WEIGHT\n\t\t#define
-      VFX_VARYING_EXPOSUREWEIGHT builtInInterpolants.z\n\t\t#endif\n\t\t\n\t\t\t#define
-      SHADERPASS SHADERPASS_FORWARD_UNLIT\n\t\t\t#if !(defined(VFX_VARYING_PS_INPUTS)
-      && defined(VFX_VARYING_POSCS))\n\t\t\t#error VFX_VARYING_PS_INPUTS and VFX_VARYING_POSCS
-      must be defined.\n\t\t\t#endif\n\t\t\t\n\t\t\t#include \"Packages/com.unity.render-pipelines.high-definition/Runtime/VFXGraph/Shaders/VFXCommon.hlsl\"\n\t\t\t#include
+      VFX_VARYING_EXPOSUREWEIGHT builtInInterpolants.z\n\t\t#endif\n\t\t\n\t\t\t\n\t\t\t#if
+      !(defined(VFX_VARYING_PS_INPUTS) && defined(VFX_VARYING_POSCS))\n\t\t\t#error
+      VFX_VARYING_PS_INPUTS and VFX_VARYING_POSCS must be defined.\n\t\t\t#endif\n\t\t\t\n\t\t\t#include
+      \"Packages/com.unity.visualeffectgraph/Shaders/RenderPipeline/Universal/VFXCommon.hlsl\"\n\t\t\t#include
       \"Packages/com.unity.visualeffectgraph/Shaders/VFXCommon.hlsl\"\n\t\t\t\n\n\t\t\tvoid
       AttributeFromCurve_2C8A40AE(inout float3 color, float age, float lifetime,
       float Color) /*attribute:color Composition:Add AlphaComposition:Overwrite SampleMode:OverLife
@@ -1280,13 +1279,13 @@ VisualEffectResource:
         index: 1
       temporaryBuffers: []
       values:
-      - nameId: uniform_a
-        index: 0
       - nameId: uniform_b
-        index: 4
+        index: 0
       - nameId: uniform_c
-        index: 20
+        index: 4
       - nameId: uniform_d
+        index: 20
+      - nameId: uniform_e
         index: 8
       - nameId: uniform_f
         index: 11
@@ -1300,7 +1299,7 @@ VisualEffectResource:
         index: 3
       - nameId: uniform_k
         index: 29
-      - nameId: texture_e
+      - nameId: texture_b
         index: 23
       params:
       - nameId: bounds_center
@@ -3654,7 +3653,7 @@ MonoBehaviour:
   useAlphaClipping: 0
   generateMotionVector: 0
   m_SubOutputs:
-  - {fileID: 8926484042661615155}
+  - {fileID: 0}
   cullMode: 3
   zWriteMode: 0
   zTestMode: 0
@@ -3666,25 +3665,6 @@ MonoBehaviour:
   indirectDraw: 0
   castShadows: 0
   useExposureWeight: 0
---- !u!114 &8926484042661615155
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 081ffb0090424ba4cb05370a42ead6b9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Parent: {fileID: 0}
-  m_Children: []
-  m_UIPosition: {x: 0, y: 0}
-  m_UICollapsed: 1
-  m_UISuperCollapsed: 0
-  opaqueRenderQueue: 0
-  transparentRenderQueue: 1
 --- !u!114 &8926484042661615157
 MonoBehaviour:
   m_ObjectHideFlags: 0

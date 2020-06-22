@@ -6,6 +6,6 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/VFX/Pyro/Pyro.unity
-    guid: c7714d76a45b34f4e996555478335ea6
+    path: Assets/SideKick/sidekick.unity
+    guid: 82b3de0cb8f20ef4fa729f27e0107b37
   m_configObjects: {}
