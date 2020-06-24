@@ -22,12 +22,12 @@ public class SKHover : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     public void OnPointerEnter(PointerEventData eventData)
     {
         isOver = true;
-        onTouchOut.Invoke();
+        onTouchOver.Invoke();
     }
     public void OnPointerExit(PointerEventData eventData)
     {
         if (isOver)
-            onTouchOver.Invoke();
+            onTouchOut.Invoke();
         isOver = false;
     }
 

@@ -198,13 +198,14 @@ public class MidiManager : Singleton<MidiManager>
 
     public void SendNoteOn(int nota, int pressure = 127, Channel channel = Channel.Channel1)
     {
-        Debug.Log("noteon channel " + channel + " pitch " + (Pitch)nota + " pressure " + pressure);
+        Debug.Log("noteon channel " + channel + " pitch " + (Pitch)nota + " pressure " + pressure + " channel " + channel);
 
         outDevice.SendNoteOn(channel, (Pitch)nota, pressure);
     }
 
     public void SendNoteOnWithOffSchedule(int nota, float delay, int pressure = 127, Channel channel = Channel.Channel1)
     {
+        Debug.Log("noteoff channel " + channel + " pitch " + (Pitch)nota + " pressure " + pressure + " channel " + channel);
 
         Clock clock = new Clock(120);
         clock.Schedule(new NoteOnMessage(outDevice, channel, (Pitch)nota, pressure, 0));
@@ -214,7 +215,7 @@ public class MidiManager : Singleton<MidiManager>
 
     public void SendNoteOff(int nota, int pressure = 127, Channel channel = Channel.Channel1)
     {
-        Debug.Log("noteoff channel " + channel + " pitch " + (Pitch)nota + " pressure " + pressure);
+        //Debug.Log("noteoff channel " + channel + " pitch " + (Pitch)nota + " pressure " + pressure + " channel " + channel);
 
         outDevice.SendNoteOff(channel, (Pitch)nota, pressure);
 

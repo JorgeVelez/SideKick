@@ -140,5 +140,36 @@ namespace Midi
             channel.Validate();
             return ChannelNames[(int)channel];
         }
+
+        private static int[] ChannelNumbers = new int[]
+       {
+            1,
+            2,
+            3,
+            4,
+            5,
+            6,
+            7,
+            8,
+            9,
+            10,
+            11,
+            12,
+            13,
+            14,
+            15,
+            16
+       };
+
+        /// <summary>
+        /// Returns the human-readable name of a MIDI channel.
+        /// </summary>
+        /// <param name="channel">The channel.</param>
+        /// <exception cref="ArgumentOutOfRangeException">The channel is out-of-range.</exception>
+        public static string Number(this Channel channel)
+        {
+            channel.Validate();
+            return ChannelNumbers[(int)channel].ToString();
+        }
     }
 }
