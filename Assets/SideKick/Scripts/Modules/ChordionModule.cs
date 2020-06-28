@@ -17,7 +17,7 @@ public class ChordionModule : MonoBehaviour
     int octave = 3;
 
     Chord currentChord = null;
-    private float strumSustain=100;
+    private float strumSustain=1;
 
     private Channel midiChannelStrum = Channel.Channel1;
     private Channel midiChannelChord = Channel.Channel1;
@@ -86,7 +86,7 @@ public class ChordionModule : MonoBehaviour
 
     private void ChangeMidiChannelChords(int v)
     {
-        if (midiChannelChord + v > 0 && (int)midiChannelChord + v < 16)
+        if (midiChannelChord + v >=0 && (int)midiChannelChord + v < 16)
             midiChannelChord = midiChannelChord + v;
         transform.Find("channelSelectorChords/Value").GetComponent<Text>().text = midiChannelChord.Number();
 
@@ -94,7 +94,7 @@ public class ChordionModule : MonoBehaviour
 
     private void ChangeMidiChannelStrum(int v)
     {
-        if (midiChannelStrum +v>0 && (int)midiChannelStrum + v < 16)
+        if (midiChannelStrum +v>=0 && (int)midiChannelStrum + v < 16)
         midiChannelStrum = midiChannelStrum + v;
        
         transform.Find("channelSelectorStrum/Value").GetComponent<Text>().text = midiChannelStrum.Number();
@@ -115,33 +115,55 @@ public class ChordionModule : MonoBehaviour
         MidiManager.Instance.SendNoteOnWithOffSchedule(strumIndex, strumSustain,127, midiChannelStrum);
     }
 
-    private void PlayChord( Pitch rootPitch, int notesequence, Image imagen)
+    private void PlayChord(Pitch rootPitch, int notesequence, Image imagen)
     {
         imagen.color = Color.magenta;
-        Chord chord = new Chord(rootPitch.NotePreferringFlats(),Chord.Patterns[notesequence], 0);
+        Chord chord = new Chord(rootPitch.NotePreferringFlats(), Chord.Patterns[notesequence], 0);
         currentChord = chord;
         Pitch[] pitches = chord.GetPitches(rootPitch);
         for (var i = 0; i < chord.GetPitches(rootPitch).Length; ++i)
         {
-            if(transform.Find("SoundToggle").GetComponent<Toggle>().isOn)
-                MidiManager.Instance.SendNoteOn((int)pitches[i]+(octave*12),127, midiChannelChord);
+            if (transform.Find("SoundToggle").GetComponent<Toggle>().isOn)
+                MidiManager.Instance.SendNoteOn((int)pitches[i] + (octave * 12), 127, midiChannelChord);
         }
 
         foreach (Transform child in transform.Find("strum"))
         {
-            if(child.gameObject.activeSelf)
-            GameObject.Destroy(child.gameObject);
+            if (child.gameObject.activeSelf)
+                GameObject.Destroy(child.gameObject);
         }
         Note[] notes = currentChord.NoteSequence;
         int noteIndex = 0;
         int octaveForPitches = 2;
-        for (int i = 0; i < 12; i++)
+        int totalAreas = notes.Length * 4;
+
+        List<Color32> colors = new List<Color32>(){
+             new Color32(201, 0, 254, 255),
+            new Color32(0, 174, 255, 255),
+            new Color32(0, 254, 114, 255),
+            new Color32(204, 254, 0, 255),
+        };
+
+        if (notes.Length == 4)
+            transform.Find("strum").GetComponent<GridLayoutGroup>().cellSize = new Vector2(151, 113);
+        else
+            transform.Find("strum").GetComponent<GridLayoutGroup>().cellSize = new Vector2(151, 151);
+
+
+        for (int i = 0; i < totalAreas; i++)
         {
             transform.Find("strum/area").gameObject.SetActive(false);
             GameObject go = Instantiate(transform.Find("strum/area").gameObject, transform.Find("strum"));
+
             go.SetActive(true);
             int strumIndex = (int)notes[noteIndex].PitchInOctave(octaveForPitches);
             go.GetComponent<SKHover>().onTouchOver.AddListener(() => PlayNote(strumIndex));
+            go.GetComponentInChildren<Text>().text = notes[noteIndex].ToString();
+
+            Color32 newColor = colors[octaveForPitches - 2];
+            newColor.a = (byte)(255 - (39 * noteIndex));
+            go.GetComponent<Image>().color = newColor;
+
             noteIndex++;
             if (noteIndex >= notes.Length)
             {
