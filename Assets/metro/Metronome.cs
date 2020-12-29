@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections;
 
+[RequireComponent(typeof(AudioSource))]
 public class Metronome : MonoBehaviour
 {
     public double bpm = 140.0F;
@@ -9,7 +10,12 @@ public class Metronome : MonoBehaviour
     double sampleRate = 0.0F; 
     bool ticked = false;
 
+    private AudioSource asource;
+
+
     void Start() {
+        asource = GetComponent<AudioSource>();
+
         double startTick = AudioSettings.dspTime;
         sampleRate = AudioSettings.outputSampleRate;
 
@@ -25,7 +31,8 @@ public class Metronome : MonoBehaviour
 
     void OnTick() {
         Debug.Log( "Tick" );
-        
+        asource.Play();
+
     }
 
     void FixedUpdate() {

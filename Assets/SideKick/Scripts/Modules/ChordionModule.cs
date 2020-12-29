@@ -12,7 +12,7 @@ public class ChordionModule : MonoBehaviour
 
     List<Button> scaleButtons = new List<Button>();
 
-    List<string> chordTypes = new List<string>() { "ChordsM", "Chordsm", "Chords7", "ChordsDim", "ChordsAug"};
+    List<string> chordTypes = new List<string>() { "ChordsM", "Chordsm", "Chords7", "Chordsm7", "ChordsDim", "ChordsDim7", "ChordsAug", "ChordsAug7", "ChordsSus2", "ChordsSus4" };
 
     int octave = 3;
 
@@ -49,14 +49,16 @@ public class ChordionModule : MonoBehaviour
 
         for (int i = 0; i < chordTypes.Count; i++)
         {
-            transform.Find(chordTypes[i] + "/Button").gameObject.SetActive(false);
+            transform.Find("Chords/" + chordTypes[i] + "/Button").gameObject.SetActive(false);
             for (Pitch pitch = Pitch.C0; pitch < Pitch.C2; ++pitch)
             {
-                GameObject go = Instantiate(transform.Find(chordTypes[i] + "/Button").gameObject, transform.Find(chordTypes[i]));
+                GameObject go = Instantiate(transform.Find("Chords/" + chordTypes[i] + "/Button").gameObject, transform.Find("Chords/" + chordTypes[i]));
                 go.SetActive(true);
                 Pitch lePitch = pitch;
                 int chordTypeIndex = i;
                 go.GetComponent<SKButton>().onTouchDown.AddListener(() => PlayChord(lePitch, chordTypeIndex, go.GetComponent<Image>()));
+                if (i == 0 &&  pitch == Pitch.C0)
+                    PlayChord(lePitch, chordTypeIndex, go.GetComponent<Image>());
                 go.GetComponent<SKButton>().onTouchUp.AddListener(() => StopChord(lePitch, chordTypeIndex));
                 go.GetComponentInChildren<Text>().text = lePitch.NotePreferringFlats().ToString();
             }
@@ -145,9 +147,9 @@ public class ChordionModule : MonoBehaviour
         };
 
         if (notes.Length == 4)
-            transform.Find("strum").GetComponent<GridLayoutGroup>().cellSize = new Vector2(151, 113);
+            transform.Find("strum").GetComponent<GridLayoutGroup>().cellSize = new Vector2(253, 128);
         else
-            transform.Find("strum").GetComponent<GridLayoutGroup>().cellSize = new Vector2(151, 151);
+            transform.Find("strum").GetComponent<GridLayoutGroup>().cellSize = new Vector2(253, 170);
 
 
         for (int i = 0; i < totalAreas; i++)

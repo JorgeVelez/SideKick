@@ -501,8 +501,27 @@ namespace Midi
         /// <summary>
         /// Pattern for Seventh chords.
         /// </summary>
-        public static ChordPattern Seventh =
+        public static ChordPattern MajorSeventh =
             new ChordPattern("Seventh", "7", new int[] { 0, 4, 7, 10 }, new int[] { 0, 2, 4, 6 });
+
+        /// <summary>
+        /// Pattern for minor Seventh chords.
+        /// </summary>
+        public static ChordPattern MinorSeventh =
+            new ChordPattern("Minor Seventh", "m7", new int[] { 0, 3, 7, 10 }, new int[] { 0, 2, 4, 6 });
+
+        /// <summary>
+        /// Pattern for minor Seventh chords.
+        /// </summary>
+        public static ChordPattern Suspended4 =
+            new ChordPattern("Suspended4", "sus4", new int[] { 0, 5, 7 }, new int[] { 0, 2, 4 });
+
+        /// <summary>
+        /// Pattern for minor Seventh chords.
+        /// </summary>
+        public static ChordPattern Suspended2 =
+            new ChordPattern("Suspended2", "sus2", new int[] { 0, 2, 7 }, new int[] { 0, 2, 4 });
+
 
         /// <summary>
         /// Pattern for Augmented chords.
@@ -511,10 +530,22 @@ namespace Midi
             new ChordPattern("Augmented", "aug", new int[] { 0, 4, 8 }, new int[] { 0, 2, 4 });
 
         /// <summary>
+        /// Pattern for Augmented chords.
+        /// </summary>
+        public static ChordPattern AugmentedSeventh =
+            new ChordPattern("Augmented7", "aug7", new int[] { 0, 4, 8, 10 }, new int[] { 0, 2, 4, 6 });
+
+        /// <summary>
         /// Pattern for Diminished chords.
         /// </summary>
         public static ChordPattern Diminished =
             new ChordPattern("Diminished", "dim", new int[] { 0, 3, 6 }, new int[] { 0, 2, 4 });
+
+        /// <summary>
+        /// Pattern for Diminished chords.
+        /// </summary>
+        public static ChordPattern DiminishedSeventh =
+            new ChordPattern("Diminished7", "dim7", new int[] { 0, 3, 6, 9}, new int[] { 0, 2, 4, 6 });
 
         /// <summary>
         /// Array of all the built-in chord patterns.
@@ -523,9 +554,14 @@ namespace Midi
         {
             Major,
             Minor,
-            Seventh,
+            MajorSeventh,
+            MinorSeventh,
+            Diminished, 
+            DiminishedSeventh,
             Augmented,
-            Diminished
+            AugmentedSeventh,
+            Suspended2,
+            Suspended4
         };
 
         #endregion

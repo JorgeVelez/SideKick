@@ -96,6 +96,7 @@ LightmapSettings:
     m_PVRFilteringAtrousPositionSigmaAO: 1
     m_ExportTrainingData: 0
     m_TrainingDataDestination: TrainingData
+    m_LightProbeSampleCountMultiplier: 4
   m_LightingDataAsset: {fileID: 0}
   m_UseShadowmask: 0
 --- !u!196 &4
@@ -241,8 +242,6 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
-      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_Sprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
   m_Type: 0
   m_PreserveAspect: 0
@@ -370,9 +369,9 @@ GameObject:
   m_Component:
   - component: {fileID: 1421925114}
   - component: {fileID: 1421925113}
-  - component: {fileID: 1421925112}
   - component: {fileID: 1421925111}
   - component: {fileID: 1421925110}
+  - component: {fileID: 1421925112}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -396,14 +395,37 @@ Behaviour:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1421925109}
   m_Enabled: 1
---- !u!92 &1421925112
-Behaviour:
+--- !u!114 &1421925112
+MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1421925109}
   m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a79441f348de89743a2939f4d699eac1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_RenderShadows: 1
+  m_RequiresDepthTextureOption: 2
+  m_RequiresOpaqueTextureOption: 2
+  m_CameraType: 0
+  m_CameraOutput: 0
+  m_Cameras: []
+  m_RendererIndex: -1
+  m_VolumeLayerMask:
+    serializedVersion: 2
+    m_Bits: 1
+  m_VolumeTrigger: {fileID: 0}
+  m_RenderPostProcessing: 0
+  m_Antialiasing: 0
+  m_AntialiasingQuality: 2
+  m_StopNaN: 0
+  m_Dithering: 0
+  m_RequiresDepthTexture: 0
+  m_RequiresColorTexture: 0
+  m_Version: 2
 --- !u!20 &1421925113
 Camera:
   m_ObjectHideFlags: 0
@@ -473,6 +495,7 @@ GameObject:
   - component: {fileID: 2010381453}
   - component: {fileID: 2007797029}
   - component: {fileID: 2007797028}
+  - component: {fileID: 2007797031}
   m_Layer: 0
   m_Name: metroSimple
   m_TagString: Untagged
@@ -487,15 +510,15 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2007797027}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6c9007af292f7ea418a0582dc056b908, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bpm: 140
-  gain: 0.5
-  signatureHi: 3
-  signatureLo: 3
+  bpm: 120
+  gain: 1
+  signatureHi: 4
+  signatureLo: 4
 --- !u!114 &2007797029
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -531,6 +554,19 @@ RectTransform:
   m_AnchoredPosition: {x: -847, y: 367}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &2007797031
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2007797027}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 108f7dfef5abd8641925d73c43d5bd58, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bpm: 140
 --- !u!82 &2010381453
 AudioSource:
   m_ObjectHideFlags: 0

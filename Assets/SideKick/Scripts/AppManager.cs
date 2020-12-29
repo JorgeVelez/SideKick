@@ -17,6 +17,8 @@ public class AppManager : MonoBehaviour
     {
         MainUI = GameObject.Find("Canvas").transform;
 
+        MainUI.Find("Header/closeBt").GetComponent<Button>().onClick.AddListener(()=>Application.Quit());
+
         MidiInDD = MainUI.Find("Header/MidiInDD").GetComponent<Dropdown>();
         MidiOutDD = MainUI.Find("Header/MidiOutDD").GetComponent<Dropdown>();
 
